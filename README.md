@@ -4,11 +4,13 @@ Plugin WordPress que fornece a **estrutura de dados** das experiências de turis
 da agência: um Custom Post Type, uma taxonomia e os campos customizados (ACF).
 Independente de tema — a estrutura sobrevive a troca de tema.
 
-> Este plugin cuida **apenas** dos dados — não renderiza HTML de layout e não
-> escreve em nenhuma página. O único shortcode, `[cor_categoria]`, devolve um
-> valor (o hex da cor da categoria), não markup. Toda a apresentação (card,
-> carrosséis por categoria, Loop Grid, Taxonomy Filter e Single) é montada na
-> interface do **Elementor Pro** e **não** faz parte deste plugin.
+> Este plugin cuida **apenas** dos dados — **no front** não renderiza HTML de
+> layout e não escreve em nenhuma página. O único shortcode, `[cor_categoria]`,
+> devolve um valor (o hex da cor da categoria), não markup. A única exceção é o
+> admin: a coluna "Foto" da listagem monta markup, mas nada disso chega ao
+> visitante. Toda a apresentação (card, carrosséis por categoria, Loop Grid,
+> Taxonomy Filter e Single) é montada na interface do **Elementor Pro** e
+> **não** faz parte deste plugin.
 
 ## O que ele registra
 
@@ -20,6 +22,7 @@ Independente de tema — a estrutura sobrevive a troca de tema.
 | Grupo ACF | `Estilo da Categoria` | Campo `cor` (Color Picker) no **termo** da taxonomia. Disponibiliza a cor da categoria como dado, para uso opcional no card via Elementor. |
 | Shortcode | `[cor_categoria]` | Devolve o hex da cor da categoria do post atual do loop (campo `cor` do termo). Atributos: `fallback` (default `#1D9E75`) e `term_id` (força um termo específico). Saída sempre um hex válido. |
 | Dynamic Tag | `Cor da Categoria` | Tag nativa do Elementor (categoria COLOR), grupo "Experiência". Mesma regra do shortcode, direto no seletor de cor de qualquer elemento (fundo, texto, borda). |
+| Coluna no admin | `Foto` | Miniatura da imagem destacada na listagem de Experiências, entre a checkbox e o título. Sem imagem, mostra um placeholder. Só no admin. |
 
 ### Mapeamento dos requisitos
 - **Foto** → imagem destacada (suporte a `thumbnail`).
@@ -65,9 +68,33 @@ rio-aventura-plugin/
 │   ├── acf-fields.php         # campos da experiência + cor do termo
 │   ├── shortcode-cor-categoria.php  # resolução da cor + shortcode [cor_categoria]
 │   ├── elementor-dynamic-tags.php   # Dynamic Tag "Cor da Categoria" (COLOR)
+│   ├── admin-columns.php      # coluna "Foto" na listagem (só carregado no admin)
 │   └── class-importer.php     # importador CSV (só carregado no admin)
 └── README.md
 ```
+
+## Listagem no admin
+
+**Experiências → Todas as Experiências.** A listagem ganha uma coluna **Foto**
+com a miniatura da imagem destacada, posicionada entre a checkbox e o título.
+
+Quando a experiência não tem imagem destacada, a célula mostra um placeholder —
+quadrado cinza com borda tracejada e o ícone `dashicons-palmtree`, o mesmo do
+menu do CPT. A escolha é deliberada: célula vazia se confunde com falha de
+carregamento, e a ausência de foto é exatamente o que se quer enxergar ao
+varrer a lista antes de publicar.
+
+Notas de implementação:
+
+- A imagem é pedida em `array( 120, 120 )` e exibida a 60px, para não borrar em
+  tela de alta densidade. O WordPress serve o tamanho registrado mais próximo.
+- `object-fit: cover` mantém o quadrado com imagem retrato ou paisagem.
+- O CSS é inline e impresso só nessa tela (`get_current_screen()`). São poucas
+  regras para uma tela única — não justifica um arquivo e uma requisição a mais.
+- O ícone do placeholder é `aria-hidden`; o estado é anunciado por um
+  `screen-reader-text` com "Sem foto".
+- A coluna é inserida reconstruindo o array de colunas, preservando a ordem das
+  demais — colunas adicionadas por outros plugins continuam onde estavam.
 
 ## Importador CSV
 
