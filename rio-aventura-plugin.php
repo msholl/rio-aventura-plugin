@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       Rio Aventura — Experiências
  * Plugin URI:        https://conecta-soft.com.br/
- * Description:       Estrutura de dados das experiências de turismo: CPT "Experiência", taxonomia "Categorias" (com cor por termo) e campos ACF (preço, duração, dificuldade, distância). Independente de tema, pronto para os Dynamic Tags do Elementor.
- * Version:           1.0.4
+ * Description:       Estrutura de dados das experiências de turismo: CPT "Experiência", taxonomia "Categorias" (com cor por termo) e campos ACF (preço, duração, dificuldade, distância, horários, incluso, não incluso, levar contigo). Independente de tema, pronto para os Dynamic Tags do Elementor.
+ * Version:           1.5.1
  * Requires at least: 6.0
  * Requires PHP:      8.1
  * Author:            Matheus Sholl Schneider
@@ -19,7 +19,7 @@
 // Impede o acesso direto ao arquivo.
 defined( 'ABSPATH' ) || exit;
 
-define( 'CONECTA_EXP_VERSION', '1.0.4' );
+define( 'CONECTA_EXP_VERSION', '1.5.1' );
 define( 'CONECTA_EXP_FILE', __FILE__ );
 define( 'CONECTA_EXP_PATH', plugin_dir_path( __FILE__ ) );
 
@@ -27,6 +27,13 @@ define( 'CONECTA_EXP_PATH', plugin_dir_path( __FILE__ ) );
 require_once CONECTA_EXP_PATH . 'includes/class-taxonomy.php';
 require_once CONECTA_EXP_PATH . 'includes/class-cpt.php';
 require_once CONECTA_EXP_PATH . 'includes/acf-fields.php';
+require_once CONECTA_EXP_PATH . 'includes/shortcode-cor-categoria.php';
+require_once CONECTA_EXP_PATH . 'includes/elementor-dynamic-tags.php';
+
+// O importador só é carregado no admin — não tem nada a fazer no front.
+if ( is_admin() ) {
+	require_once CONECTA_EXP_PATH . 'includes/class-importer.php';
+}
 
 /**
  * Carrega o text domain para tradução.
@@ -89,7 +96,7 @@ function conecta_exp_acf_notice() {
 	printf(
 		'<div class="notice notice-warning"><p>%s</p></div>',
 		esc_html__(
-			'Rio Aventura — Experiências: o plugin Advanced Custom Fields (ACF) está inativo. O CPT e a taxonomia Categorias funcionam normalmente, mas os campos (Preço, Duração, Dificuldade e Distância) só aparecem com o ACF ativo.',
+			'Rio Aventura — Experiências: o plugin Advanced Custom Fields (ACF) está inativo. O CPT e a taxonomia Categorias funcionam normalmente, mas os campos (Preço, Duração, Dificuldade, Distância, Horários, Incluso, Não Incluso e Levar Contigo) só aparecem com o ACF ativo.',
 			'conecta-experiencias'
 		)
 	);
