@@ -1,0 +1,781 @@
+# Copyright (C) 2026 Matheus Sholl Schneider
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Rio Aventura — Experiências 1.13.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rio-aventura-plugin\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-02T03:13:40+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: conecta-experiencias\n"
+
+#. Plugin Name of the plugin
+#: rio-aventura-plugin.php
+msgid "Rio Aventura — Experiências"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: rio-aventura-plugin.php
+msgid "https://conecta-soft.com.br/"
+msgstr ""
+
+#. Description of the plugin
+#: rio-aventura-plugin.php
+msgid "Estrutura de dados das experiências de turismo: CPT \"Experiência\", taxonomia \"Categorias\" (com cor por termo) e campos ACF (preço, duração, dificuldade, distância, horários, incluso, não incluso, levar contigo). Independente de tema, pronto para os Dynamic Tags do Elementor. Inclui a listagem [experiencias] com filtro por categoria e a página completa da experiência."
+msgstr ""
+
+#. Author of the plugin
+#: rio-aventura-plugin.php
+msgid "Matheus Sholl Schneider"
+msgstr ""
+
+#: includes/acf-fields.php:28
+msgid "Detalhes da Experiência"
+msgstr ""
+
+#: includes/acf-fields.php:32
+#: includes/admin-columns.php:46
+msgid "Destaque"
+msgstr ""
+
+#: includes/acf-fields.php:36
+msgid "Aparece no filtro \"Destacados\", o primeiro da página de experiências."
+msgstr ""
+
+#: includes/acf-fields.php:40
+#: includes/class-importer.php:1017
+msgid "Preço"
+msgstr ""
+
+#: includes/acf-fields.php:43
+msgid "Ex.: R$ 180,00"
+msgstr ""
+
+#: includes/acf-fields.php:47
+msgid "Duração"
+msgstr ""
+
+#: includes/acf-fields.php:50
+msgid "Ex.: 3 horas"
+msgstr ""
+
+#: includes/acf-fields.php:54
+msgid "Dificuldade"
+msgstr ""
+
+#: includes/acf-fields.php:57
+msgid "Ex.: Moderado"
+msgstr ""
+
+#: includes/acf-fields.php:61
+msgid "Distância"
+msgstr ""
+
+#: includes/acf-fields.php:64
+msgid "Ex.: 533m ou 0,5km"
+msgstr ""
+
+#: includes/acf-fields.php:68
+msgid "Horários"
+msgstr ""
+
+#: includes/acf-fields.php:71
+msgid "Ex.: 8h, 11h, 16h"
+msgstr ""
+
+#: includes/acf-fields.php:75
+msgid "Incluso"
+msgstr ""
+
+#: includes/acf-fields.php:80
+#: includes/acf-fields.php:89
+msgid "Um item por linha — cada linha vira uma quebra (<br>) na exibição, sem lista com marcadores."
+msgstr ""
+
+#: includes/acf-fields.php:84
+msgid "Não Incluso"
+msgstr ""
+
+#: includes/acf-fields.php:93
+msgid "Levar Contigo"
+msgstr ""
+
+#: includes/acf-fields.php:98
+msgid "Texto corrido — use separadores como \"·\" ou vírgula."
+msgstr ""
+
+#: includes/acf-fields.php:118
+msgid "Estilo da Categoria"
+msgstr ""
+
+#: includes/acf-fields.php:122
+msgid "Cor"
+msgstr ""
+
+#: includes/acf-fields.php:125
+msgid "Cor da categoria, disponível como dado para uso opcional no card via Elementor."
+msgstr ""
+
+#: includes/admin-columns.php:43
+#: includes/admin-columns.php:52
+msgid "Foto"
+msgstr ""
+
+#: includes/admin-columns.php:70
+msgid "Em destaque"
+msgstr ""
+
+#: includes/admin-columns.php:95
+msgid "Sem foto"
+msgstr ""
+
+#: includes/class-cpt.php:30
+msgctxt "Nome geral do post type"
+msgid "Experiências"
+msgstr ""
+
+#: includes/class-cpt.php:31
+msgctxt "Nome singular do post type"
+msgid "Experiência"
+msgstr ""
+
+#: includes/class-cpt.php:32
+msgctxt "Texto do menu admin"
+msgid "Experiências"
+msgstr ""
+
+#: includes/class-cpt.php:33
+msgctxt "Item da barra admin"
+msgid "Experiência"
+msgstr ""
+
+#: includes/class-cpt.php:34
+msgid "Adicionar nova"
+msgstr ""
+
+#: includes/class-cpt.php:35
+msgid "Adicionar nova Experiência"
+msgstr ""
+
+#: includes/class-cpt.php:36
+msgid "Nova Experiência"
+msgstr ""
+
+#: includes/class-cpt.php:37
+msgid "Editar Experiência"
+msgstr ""
+
+#: includes/class-cpt.php:38
+msgid "Ver Experiência"
+msgstr ""
+
+#: includes/class-cpt.php:39
+msgid "Ver Experiências"
+msgstr ""
+
+#: includes/class-cpt.php:40
+msgid "Todas as Experiências"
+msgstr ""
+
+#: includes/class-cpt.php:41
+msgid "Buscar Experiências"
+msgstr ""
+
+#: includes/class-cpt.php:42
+msgid "Experiência superior:"
+msgstr ""
+
+#: includes/class-cpt.php:43
+msgid "Nenhuma experiência encontrada."
+msgstr ""
+
+#: includes/class-cpt.php:44
+msgid "Nenhuma experiência na lixeira."
+msgstr ""
+
+#: includes/class-cpt.php:45
+msgid "Foto da experiência"
+msgstr ""
+
+#: includes/class-cpt.php:46
+msgid "Definir foto da experiência"
+msgstr ""
+
+#: includes/class-cpt.php:47
+msgid "Remover foto da experiência"
+msgstr ""
+
+#: includes/class-cpt.php:48
+msgid "Usar como foto da experiência"
+msgstr ""
+
+#: includes/class-cpt.php:49
+msgid "Arquivo de Experiências"
+msgstr ""
+
+#: includes/class-cpt.php:50
+msgid "Inserir na experiência"
+msgstr ""
+
+#: includes/class-cpt.php:51
+msgid "Enviado para esta experiência"
+msgstr ""
+
+#: includes/class-cpt.php:52
+msgid "Filtrar lista de experiências"
+msgstr ""
+
+#: includes/class-cpt.php:53
+msgid "Navegação da lista de experiências"
+msgstr ""
+
+#: includes/class-cpt.php:54
+msgid "Lista de experiências"
+msgstr ""
+
+#: includes/class-cpt.php:55
+msgid "Experiência publicada."
+msgstr ""
+
+#: includes/class-cpt.php:56
+msgid "Experiência atualizada."
+msgstr ""
+
+#: includes/class-importer.php:85
+#: includes/class-importer.php:907
+msgid "Importar Experiências (CSV)"
+msgstr ""
+
+#: includes/class-importer.php:86
+msgid "Importar CSV"
+msgstr ""
+
+#: includes/class-importer.php:206
+msgid "Não foi possível abrir o arquivo enviado."
+msgstr ""
+
+#: includes/class-importer.php:224
+msgid "O arquivo está vazio ou não tem linha de cabeçalho."
+msgstr ""
+
+#: includes/class-importer.php:258
+msgid "O cabeçalho não tem a coluna \"titulo\". Ela é obrigatória — baixe o modelo para conferir os nomes esperados."
+msgstr ""
+
+#: includes/class-importer.php:421
+msgid "ID de imagem inexistente."
+msgstr ""
+
+#: includes/class-importer.php:433
+msgid "Imagem não encontrada na biblioteca de mídia."
+msgstr ""
+
+#: includes/class-importer.php:485
+msgid "Linha sem título."
+msgstr ""
+
+#: includes/class-importer.php:496
+msgid "Já existe e a atualização está desmarcada."
+msgstr ""
+
+#. translators: %s: mensagem de erro da imagem.
+#: includes/class-importer.php:573
+#, php-format
+msgid "imagem não importada (%s)"
+msgstr ""
+
+#: includes/class-importer.php:618
+msgid "Nenhum arquivo aguardando importação. Envie o CSV novamente."
+msgstr ""
+
+#: includes/class-importer.php:625
+msgid "Este endereço não corresponde ao último arquivo enviado. Envie o CSV novamente."
+msgstr ""
+
+#: includes/class-importer.php:633
+msgid "O arquivo enviado passou de 1 hora sem ser confirmado e foi descartado. Envie o CSV novamente."
+msgstr ""
+
+#: includes/class-importer.php:641
+msgid "O arquivo enviado não está mais no servidor — a pasta de uploads pode ter sido limpa. Envie o CSV novamente."
+msgstr ""
+
+#: includes/class-importer.php:676
+msgid "Não foi possível criar a pasta temporária de importação."
+msgstr ""
+
+#: includes/class-importer.php:696
+#: includes/class-importer.php:752
+#: includes/class-importer.php:904
+msgid "Sem permissão para importar."
+msgstr ""
+
+#: includes/class-importer.php:702
+msgid "Selecione um arquivo CSV."
+msgstr ""
+
+#: includes/class-importer.php:706
+msgid "Falha no upload do arquivo."
+msgstr ""
+
+#: includes/class-importer.php:713
+msgid "Formato não suportado. Salve a planilha como CSV (arquivo .csv) e envie novamente."
+msgstr ""
+
+#: includes/class-importer.php:730
+msgid "Não foi possível salvar o arquivo enviado."
+msgstr ""
+
+#: includes/class-importer.php:812
+msgid "Sem permissão."
+msgstr ""
+
+#: includes/class-importer.php:941
+msgid "Monte a planilha no Excel ou Google Sheets, exporte como CSV e envie aqui. Nada é gravado antes da pré-visualização."
+msgstr ""
+
+#: includes/class-importer.php:948
+msgid "Arquivo CSV"
+msgstr ""
+
+#: includes/class-importer.php:952
+msgid "Enviar e pré-visualizar"
+msgstr ""
+
+#: includes/class-importer.php:955
+msgid "Colunas reconhecidas"
+msgstr ""
+
+#: includes/class-importer.php:958
+msgid "\"titulo\" é a única obrigatória. As demais podem faltar — o que não vier na planilha não é tocado."
+msgstr ""
+
+#: includes/class-importer.php:959
+msgid "Em \"incluso\" e \"nao_incluso\", separe os itens por \"|\" ou por quebra de linha dentro da célula."
+msgstr ""
+
+#: includes/class-importer.php:960
+msgid "Em \"categorias\", separe por vírgula. Categorias que ainda não existem são criadas automaticamente."
+msgstr ""
+
+#: includes/class-importer.php:961
+msgid "\"imagem\" aceita a URL da foto, o ID de um anexo ou o nome do arquivo já enviado à biblioteca de mídia."
+msgstr ""
+
+#: includes/class-importer.php:962
+msgid "Uma experiência já existente é reconhecida pelo slug e, na falta dele, pelo título exato."
+msgstr ""
+
+#: includes/class-importer.php:968
+msgid "Baixar CSV modelo"
+msgstr ""
+
+#: includes/class-importer.php:998
+msgid "Colunas ignoradas por não terem correspondência:"
+msgstr ""
+
+#: includes/class-importer.php:1006
+msgid "Nenhuma linha com conteúdo foi encontrada no arquivo."
+msgstr ""
+
+#: includes/class-importer.php:1012
+msgid "Pré-visualização"
+msgstr ""
+
+#: includes/class-importer.php:1014
+#: includes/class-importer.php:1109
+msgid "Título"
+msgstr ""
+
+#: includes/class-importer.php:1015
+msgid "Ação"
+msgstr ""
+
+#: includes/class-importer.php:1016
+#: includes/class-taxonomy.php:37
+msgid "Categorias"
+msgstr ""
+
+#: includes/class-importer.php:1018
+msgid "Imagem"
+msgstr ""
+
+#: includes/class-importer.php:1023
+msgid "Erro: sem título"
+msgstr ""
+
+#: includes/class-importer.php:1025
+msgid "Atualizar existente"
+msgstr ""
+
+#: includes/class-importer.php:1027
+msgid "Criar"
+msgstr ""
+
+#: includes/class-importer.php:1037
+msgid "sim"
+msgstr ""
+
+#: includes/class-importer.php:1049
+msgid "Status dos itens"
+msgstr ""
+
+#: includes/class-importer.php:1052
+msgid "Rascunho (revisar antes de publicar)"
+msgstr ""
+
+#: includes/class-importer.php:1053
+msgid "Publicado"
+msgstr ""
+
+#: includes/class-importer.php:1055
+msgid "A coluna \"status\" da planilha, quando preenchida, tem prioridade sobre esta opção."
+msgstr ""
+
+#: includes/class-importer.php:1059
+msgid "Opções"
+msgstr ""
+
+#: includes/class-importer.php:1061
+msgid "Atualizar experiências que já existem"
+msgstr ""
+
+#: includes/class-importer.php:1062
+msgid "Importar as imagens da coluna \"imagem\""
+msgstr ""
+
+#: includes/class-importer.php:1063
+msgid "Baixar imagens de URLs externas é a parte lenta. Se der timeout, desmarque, importe os dados e rode de novo só com as imagens."
+msgstr ""
+
+#: includes/class-importer.php:1067
+msgid "Importar agora"
+msgstr ""
+
+#: includes/class-importer.php:1069
+msgid "← Cancelar e enviar outro arquivo"
+msgstr ""
+
+#. translators: 1: criados, 2: atualizados, 3: ignorados, 4: erros.
+#: includes/class-importer.php:1099
+#, php-format
+msgid "Importação concluída: %1$d criada(s), %2$d atualizada(s), %3$d ignorada(s), %4$d com erro."
+msgstr ""
+
+#: includes/class-importer.php:1110
+msgid "Resultado"
+msgstr ""
+
+#: includes/class-importer.php:1111
+msgid "Observação"
+msgstr ""
+
+#: includes/class-taxonomy.php:35
+msgctxt "Nome geral da taxonomia"
+msgid "Categorias"
+msgstr ""
+
+#: includes/class-taxonomy.php:36
+msgctxt "Nome singular da taxonomia"
+msgid "Categoria"
+msgstr ""
+
+#: includes/class-taxonomy.php:38
+msgid "Todas as Categorias"
+msgstr ""
+
+#: includes/class-taxonomy.php:39
+msgid "Editar Categoria"
+msgstr ""
+
+#: includes/class-taxonomy.php:40
+msgid "Ver Categoria"
+msgstr ""
+
+#: includes/class-taxonomy.php:41
+msgid "Atualizar Categoria"
+msgstr ""
+
+#: includes/class-taxonomy.php:42
+msgid "Adicionar nova Categoria"
+msgstr ""
+
+#: includes/class-taxonomy.php:43
+msgid "Nome da nova Categoria"
+msgstr ""
+
+#: includes/class-taxonomy.php:44
+msgid "Categoria superior"
+msgstr ""
+
+#: includes/class-taxonomy.php:45
+msgid "Categoria superior:"
+msgstr ""
+
+#: includes/class-taxonomy.php:46
+msgid "Buscar Categorias"
+msgstr ""
+
+#: includes/class-taxonomy.php:47
+msgid "Categorias populares"
+msgstr ""
+
+#: includes/class-taxonomy.php:48
+msgid "Separe as categorias por vírgula"
+msgstr ""
+
+#: includes/class-taxonomy.php:49
+msgid "Adicionar ou remover categorias"
+msgstr ""
+
+#: includes/class-taxonomy.php:50
+msgid "Escolher entre as mais usadas"
+msgstr ""
+
+#: includes/class-taxonomy.php:51
+msgid "Nenhuma categoria encontrada."
+msgstr ""
+
+#: includes/class-taxonomy.php:52
+msgid "Nenhuma categoria"
+msgstr ""
+
+#: includes/class-taxonomy.php:53
+msgid "← Voltar para Categorias"
+msgstr ""
+
+#: includes/elementor-dynamic-tags.php:24
+msgid "Experiência"
+msgstr ""
+
+#: includes/elementor-dynamic-tags.php:47
+msgid "Cor da Categoria"
+msgstr ""
+
+#. translators: %s: nome da experiência.
+#: includes/front.php:39
+#, php-format
+msgid "¡Hola! Vi en el sitio la experiencia \"%s\" y quiero reservarla."
+msgstr ""
+
+#: includes/front.php:412
+msgid "Explora por categoría"
+msgstr ""
+
+#: includes/front.php:471
+msgid "Experiencias destacadas"
+msgstr ""
+
+#: includes/galeria.php:159
+msgid "Galeria de fotos e vídeos"
+msgstr ""
+
+#: includes/galeria.php:195
+#: includes/galeria.php:287
+msgid "Remover"
+msgstr ""
+
+#: includes/galeria.php:209
+msgid "Itens do carrossel da página da experiência, depois da foto da experiência. Arraste para mudar a ordem."
+msgstr ""
+
+#: includes/galeria.php:215
+msgid "Adicionar fotos ou vídeos"
+msgstr ""
+
+#: includes/galeria.php:216
+msgid "Adicionar link do YouTube/Vimeo"
+msgstr ""
+
+#: includes/galeria.php:218
+msgid "Vídeos enviados ao site: prefira clipes curtos (até ~30 s e 15 MB). Para vídeos maiores, use um link do YouTube ou Vimeo."
+msgstr ""
+
+#: includes/galeria.php:259
+msgid "Link não reconhecido. Use um link do YouTube ou do Vimeo."
+msgstr ""
+
+#: includes/galeria.php:285
+msgid "Fotos e vídeos da galeria"
+msgstr ""
+
+#: includes/galeria.php:286
+msgid "Adicionar à galeria"
+msgstr ""
+
+#: includes/galeria.php:288
+msgid "Cole o link do vídeo no YouTube ou no Vimeo:"
+msgstr ""
+
+#: rio-aventura-plugin.php:102
+msgid "Rio Aventura — Experiências: o plugin Advanced Custom Fields (ACF) está inativo. O CPT e a taxonomia Categorias funcionam normalmente, mas os campos (Preço, Duração, Dificuldade, Distância, Horários, Incluso, Não Incluso e Levar Contigo) só aparecem com o ACF ativo."
+msgstr ""
+
+#: templates/card.php:63
+msgid "Ver detalles"
+msgstr ""
+
+#: templates/categorias.php:18
+msgid "Categorías de experiencias"
+msgstr ""
+
+#. translators: %d: quantidade de experiências.
+#: templates/categorias.php:26
+#: templates/listagem.php:73
+#: templates/listagem.php:74
+#: templates/listagem.php:77
+#, php-format
+msgid "%d experiencia"
+msgid_plural "%d experiencias"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/destaques.php:31
+msgid "Ver todas las experiencias"
+msgstr ""
+
+#: templates/detalhe.php:21
+msgid "Duración"
+msgstr ""
+
+#: templates/detalhe.php:22
+msgid "Dificultad"
+msgstr ""
+
+#: templates/detalhe.php:23
+msgid "Distancia"
+msgstr ""
+
+#: templates/detalhe.php:24
+msgid "Horarios"
+msgstr ""
+
+#: templates/detalhe.php:46
+msgid "Ruta de navegación"
+msgstr ""
+
+#: templates/detalhe.php:47
+msgid "Experiencias"
+msgstr ""
+
+#: templates/detalhe.php:80
+msgid "Sobre la experiencia"
+msgstr ""
+
+#: templates/detalhe.php:86
+msgid "Qué incluye"
+msgstr ""
+
+#: templates/detalhe.php:89
+msgid "Incluye"
+msgstr ""
+
+#: templates/detalhe.php:99
+msgid "No incluye"
+msgstr ""
+
+#: templates/detalhe.php:112
+msgid "Qué llevar"
+msgstr ""
+
+#: templates/detalhe.php:118
+msgid "Reserva"
+msgstr ""
+
+#: templates/detalhe.php:139
+msgid "Reservar por WhatsApp"
+msgstr ""
+
+#: templates/detalhe.php:140
+#: templates/detalhe.php:185
+msgid "(abre en una nueva pestaña)"
+msgstr ""
+
+#: templates/detalhe.php:142
+msgid "Respondemos por WhatsApp para confirmar fecha, horario y disponibilidad."
+msgstr ""
+
+#: templates/detalhe.php:154
+msgid "Más experiencias en"
+msgstr ""
+
+#: templates/detalhe.php:156
+msgid "Más experiencias"
+msgstr ""
+
+#: templates/detalhe.php:174
+msgid "Ver todas"
+msgstr ""
+
+#: templates/detalhe.php:185
+msgid "Reservar"
+msgstr ""
+
+#: templates/galeria.php:21
+msgid "carrusel"
+msgstr ""
+
+#: templates/galeria.php:21
+#: templates/galeria.php:95
+msgid "Fotos de la experiencia"
+msgstr ""
+
+#: templates/galeria.php:25
+msgid "foto"
+msgstr ""
+
+#: templates/galeria.php:41
+msgid "Ampliar foto"
+msgstr ""
+
+#: templates/galeria.php:53
+msgid "Reproducir video"
+msgstr ""
+
+#: templates/galeria.php:60
+#: templates/galeria.php:100
+msgid "Foto anterior"
+msgstr ""
+
+#: templates/galeria.php:63
+#: templates/galeria.php:103
+msgid "Foto siguiente"
+msgstr ""
+
+#. translators: %d: número do item na galeria.
+#: templates/galeria.php:85
+#, php-format
+msgid "Ver foto %d"
+msgstr ""
+
+#. translators: %d: número do item na galeria.
+#: templates/galeria.php:87
+#, php-format
+msgid "Ver video %d"
+msgstr ""
+
+#: templates/galeria.php:97
+msgid "Cerrar"
+msgstr ""
+
+#: templates/listagem.php:22
+msgid "Filtrar por categoría"
+msgstr ""
+
+#: templates/listagem.php:26
+msgid "Destacados"
+msgstr ""
+
+#: templates/listagem.php:31
+msgid "Todas"
+msgstr ""
+
+#: templates/listagem.php:81
+msgid "No hay experiencias disponibles en este momento."
+msgstr ""

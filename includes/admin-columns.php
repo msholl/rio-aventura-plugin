@@ -20,6 +20,11 @@ defined( 'ABSPATH' ) || exit;
 const CONECTA_EXP_COLUNA_FOTO = 'conecta_exp_foto';
 
 /**
+ * Chave da coluna "Destaque" (estrela), logo depois do título.
+ */
+const CONECTA_EXP_COLUNA_DESTAQUE = 'conecta_exp_destaque';
+
+/**
  * Insere a coluna logo após a checkbox, antes do título.
  *
  * Percorre e reconstrói o array para preservar a ordem das demais colunas —
@@ -36,6 +41,9 @@ function conecta_exp_admin_colunas( $colunas ) {
 
 		if ( 'cb' === $chave ) {
 			$novas[ CONECTA_EXP_COLUNA_FOTO ] = __( 'Foto', 'conecta-experiencias' );
+		}
+		if ( 'title' === $chave ) {
+			$novas[ CONECTA_EXP_COLUNA_DESTAQUE ] = '<span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="screen-reader-text">' . esc_html__( 'Destaque', 'conecta-experiencias' ) . '</span>';
 		}
 	}
 
@@ -55,6 +63,16 @@ add_filter( 'manage_' . Conecta_Exp_CPT::POST_TYPE . '_posts_columns', 'conecta_
  * @param int    $post_id ID da experiência da linha.
  */
 function conecta_exp_admin_coluna_conteudo( $coluna, $post_id ) {
+	if ( CONECTA_EXP_COLUNA_DESTAQUE === $coluna ) {
+		if ( conecta_exp_destaque( $post_id ) ) {
+			printf(
+				'<span class="dashicons dashicons-star-filled conecta-exp-destaque" aria-hidden="true"></span><span class="screen-reader-text">%s</span>',
+				esc_html__( 'Em destaque', 'conecta-experiencias' )
+			);
+		}
+		return;
+	}
+
 	if ( CONECTA_EXP_COLUNA_FOTO !== $coluna ) {
 		return;
 	}
@@ -95,6 +113,13 @@ function conecta_exp_admin_coluna_estilo() {
 	<style id="conecta-exp-coluna-foto">
 		.wp-list-table .column-<?php echo esc_html( CONECTA_EXP_COLUNA_FOTO ); ?> {
 			width: 76px;
+		}
+		.wp-list-table .column-<?php echo esc_html( CONECTA_EXP_COLUNA_DESTAQUE ); ?> {
+			width: 32px;
+		}
+		.conecta-exp-destaque,
+		.column-<?php echo esc_html( CONECTA_EXP_COLUNA_DESTAQUE ); ?> .dashicons {
+			color: #dba617;
 		}
 		.conecta-exp-foto {
 			display: block;

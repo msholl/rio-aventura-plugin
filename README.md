@@ -4,13 +4,12 @@ Plugin WordPress que fornece a **estrutura de dados** das experiências de turis
 da agência: um Custom Post Type, uma taxonomia e os campos customizados (ACF).
 Independente de tema — a estrutura sobrevive a troca de tema.
 
-> Este plugin cuida **apenas** dos dados — **no front** não renderiza HTML de
-> layout e não escreve em nenhuma página. O único shortcode, `[cor_categoria]`,
-> devolve um valor (o hex da cor da categoria), não markup. A única exceção é o
-> admin: a coluna "Foto" da listagem monta markup, mas nada disso chega ao
-> visitante. Toda a apresentação (card, carrosséis por categoria, Loop Grid,
-> Taxonomy Filter e Single) é montada na interface do **Elementor Pro** e
-> **não** faz parte deste plugin.
+> Além dos dados, o plugin entrega telas prontas (desde a 1.7.0): a listagem
+> `[experiencias]`, com filtro por categoria e por destaque, a página completa
+> da experiência em `/experiencias/{slug}/` (com galeria de fotos e vídeos) e
+> dois blocos para a home, `[experiencias_categorias]` e
+> `[experiencias_destaque]`. Os carrosséis e cards montados no Elementor
+> continuam funcionando — as abordagens convivem.
 
 ## O que ele registra
 
@@ -18,11 +17,17 @@ Independente de tema — a estrutura sobrevive a troca de tema.
 |------|--------------|----------|
 | CPT | `experiencia` | `public`, `has_archive`, REST habilitado, suporta título/editor/imagem destacada/resumo. URLs em `/experiencias/{slug}`. Ícone `dashicons-palmtree`. |
 | Taxonomia | `categoria_experiencia` | Hierárquica (vocabulário controlado, tipo categoria), vinculada ao CPT, REST habilitado, coluna no admin. URLs em `/categoria/{termo}`. Sem termos semeados — cadastrados no admin. |
-| Grupo ACF | `Detalhes da Experiência` | Campos de texto livre `preco`, `duracao`, `dificuldade`, `distancia`, `horarios` e textareas `incluso`, `nao_incluso` (um item por linha, exibidos com `<br>`) e `levar_contigo` (texto corrido). Vinculado a `post_type == experiencia`. |
+| Grupo ACF | `Detalhes da Experiência` | Interruptor `destaque` (true/false) e campos de texto livre `preco`, `duracao`, `dificuldade`, `distancia`, `horarios` e textareas `incluso`, `nao_incluso` (um item por linha, exibidos com `<br>`) e `levar_contigo` (texto corrido). Vinculado a `post_type == experiencia`. |
 | Grupo ACF | `Estilo da Categoria` | Campo `cor` (Color Picker) no **termo** da taxonomia. Disponibiliza a cor da categoria como dado, para uso opcional no card via Elementor. |
 | Shortcode | `[cor_categoria]` | Devolve o hex da cor da categoria do post atual do loop (campo `cor` do termo). Atributos: `fallback` (default `#1D9E75`) e `term_id` (força um termo específico). Saída sempre um hex válido. |
+| Shortcode | `[experiencias]` | Grade de todas as experiências com filtro por categoria. Ver "Listagem e página da experiência". |
+| Shortcode | `[experiencia_detalhe]` | Página completa de uma experiência (estilo "single product"). |
+| Shortcode | `[experiencias_categorias]` | Cartões das categorias que levam à listagem já filtrada. Feito para a home. |
+| Shortcode | `[experiencias_destaque]` | Cards das experiências marcadas como destaque. Feito para a home. |
+| Template | `/experiencias/{slug}/` | Usa o `[experiencia_detalhe]` automaticamente, salvo se houver template Single do Elementor Pro ou `single-experiencia.php` no tema. |
+| Meta box | `Galeria de fotos e vídeos` | Fotos, vídeos MP4 e links do YouTube/Vimeo do carrossel da experiência (meta `galeria`). |
+| Colunas no admin | `Foto` e `★` | Miniatura da imagem destacada (com placeholder quando falta) e estrela das experiências em destaque. Só no admin. |
 | Dynamic Tag | `Cor da Categoria` | Tag nativa do Elementor (categoria COLOR), grupo "Experiência". Mesma regra do shortcode, direto no seletor de cor de qualquer elemento (fundo, texto, borda). |
-| Coluna no admin | `Foto` | Miniatura da imagem destacada na listagem de Experiências, entre a checkbox e o título. Sem imagem, mostra um placeholder. Só no admin. |
 
 ### Mapeamento dos requisitos
 - **Foto** → imagem destacada (suporte a `thumbnail`).
@@ -68,33 +73,47 @@ rio-aventura-plugin/
 │   ├── acf-fields.php         # campos da experiência + cor do termo
 │   ├── shortcode-cor-categoria.php  # resolução da cor + shortcode [cor_categoria]
 │   ├── elementor-dynamic-tags.php   # Dynamic Tag "Cor da Categoria" (COLOR)
-│   ├── admin-columns.php      # coluna "Foto" na listagem (só carregado no admin)
+│   ├── galeria.php            # meta box "Galeria de fotos e vídeos" + leitura dos itens
+│   ├── front.php              # shortcodes do front, template do single, helpers
+│   ├── translatepress.php     # bandeira da Espanha para o idioma es_AR
+│   ├── admin-columns.php      # colunas "Foto" e "★" na listagem (só carregado no admin)
 │   └── class-importer.php     # importador CSV (só carregado no admin)
+├── templates/                 # HTML do front (sobrescrevível pelo tema)
+│   ├── listagem.php
+│   ├── card.php
+│   ├── detalhe.php
+│   ├── galeria.php
+│   ├── categorias.php
+│   ├── destaques.php
+│   └── single-experiencia.php
+├── languages/                 # traduções pt_BR / en_US do front (.po/.mo/.l10n.php)
+├── assets/
+│   ├── experiencias.css
+│   ├── experiencias.js        # filtro sem recarregar + carrossel da galeria
+│   ├── galeria-admin.js       # meta box da galeria
+│   └── simbolo.svg            # símbolo da marca (placeholder sem foto)
 └── README.md
 ```
 
 ## Listagem no admin
 
-**Experiências → Todas as Experiências.** A listagem ganha uma coluna **Foto**
-com a miniatura da imagem destacada, posicionada entre a checkbox e o título.
+**Experiências → Todas as Experiências.** A listagem ganha duas colunas:
 
-Quando a experiência não tem imagem destacada, a célula mostra um placeholder —
-quadrado cinza com borda tracejada e o ícone `dashicons-palmtree`, o mesmo do
-menu do CPT. A escolha é deliberada: célula vazia se confunde com falha de
-carregamento, e a ausência de foto é exatamente o que se quer enxergar ao
-varrer a lista antes de publicar.
+- **Foto**, entre a checkbox e o título, com a miniatura da imagem destacada.
+  Sem imagem, mostra um placeholder — quadrado cinza com borda tracejada e o
+  ícone `dashicons-palmtree`, o mesmo do menu do CPT. Célula vazia se
+  confundiria com falha de carregamento, e a ausência de foto é exatamente o
+  que se quer enxergar ao varrer a lista antes de publicar.
+- **★**, logo depois do título, marcando as experiências em destaque.
 
 Notas de implementação:
 
 - A imagem é pedida em `array( 120, 120 )` e exibida a 60px, para não borrar em
-  tela de alta densidade. O WordPress serve o tamanho registrado mais próximo.
-- `object-fit: cover` mantém o quadrado com imagem retrato ou paisagem.
-- O CSS é inline e impresso só nessa tela (`get_current_screen()`). São poucas
-  regras para uma tela única — não justifica um arquivo e uma requisição a mais.
-- O ícone do placeholder é `aria-hidden`; o estado é anunciado por um
-  `screen-reader-text` com "Sem foto".
-- A coluna é inserida reconstruindo o array de colunas, preservando a ordem das
-  demais — colunas adicionadas por outros plugins continuam onde estavam.
+  tela de alta densidade. `object-fit: cover` mantém o quadrado.
+- O CSS é inline e impresso só nessa tela (`get_current_screen()`).
+- Os ícones são `aria-hidden`; o estado é anunciado por `screen-reader-text`.
+- As colunas são inseridas reconstruindo o array, preservando a ordem das
+  demais — colunas de outros plugins continuam onde estavam.
 
 ## Importador CSV
 
@@ -165,8 +184,8 @@ Loop.
 Como os valores dos campos já incluem unidade/símbolo (ex.: "R$ 180,00",
 "533m"), **não** use Before/After na exibição — isso duplicaria o símbolo.
 
-O card e os carrosséis por categoria são montados **manualmente no Elementor** —
-este plugin apenas fornece os dados (incluindo a `cor` de cada categoria).
+Os carrosséis por categoria da página atual são montados **manualmente no
+Elementor** com esses dados; a alternativa pronta é o `[experiencias]`.
 
 ### Dynamic Tag "Cor da Categoria"
 
@@ -193,6 +212,128 @@ de resolução (`conecta_exp_cor_categoria_valor()`).
 - A saída é sempre um hex válido (sanitizada com `sanitize_hex_color()`); sem
   ACF ativo, devolve o fallback sem erro.
 
+## Listagem e página da experiência
+
+### `[experiencias]`
+
+Cole numa página (widget **Shortcode** do Elementor ou bloco Shortcode). Mostra
+todas as experiências publicadas em cards (foto, categoria, título, duração,
+dificuldade, resumo e preço) e, acima, os botões de filtro com a contagem por
+categoria. O filtro troca os cards sem recarregar e atualiza a URL para
+`?categoria={slug}` — esse link também funciona direto (e sem JavaScript).
+
+| Atributo | Default | Uso |
+|---|---|---|
+| `categoria` | — | Slugs separados por vírgula: restringe a listagem a essas categorias. |
+| `filtro` | `si` | `no` esconde os botões de filtro. |
+| `limite` | `-1` | Máximo de experiências. |
+| `colunas` | `3` | Colunas no desktop (1–4); 2 no tablet e 1 no celular. |
+| `titulo_tag` | `h2` | Tag do título do card (`h2`, `h3`, `h4`). |
+
+Ordem: **Atributos da página → Ordem** (`menu_order`) e depois título.
+
+Havendo experiência marcada como **Destaque**, o primeiro botão do filtro é
+**★ Destacados** (`?categoria=destacados`), antes de "Todas".
+
+O início da listagem tem a âncora `#experiencias`: um link como
+`/experiencia/?categoria=tours-clasicos#experiencias` abre a página já na
+altura dos cards. No celular, a faixa de filtros rola até o botão ativo.
+
+O cabeçalho do site é transparente e fica por cima do topo da página; ponha
+um banner/hero ou um espaçador antes do shortcode.
+
+### Página da experiência
+
+`/experiencias/{slug}/` passa a ter hero com a foto, trilha (Experiencias /
+Categoria), caixa de reserva com preço, ficha (duração, dificuldade,
+distância, horários) e botão de WhatsApp, o conteúdo do editor, Incluye / No
+incluye, Qué llevar e "Más experiencias en {categoria}". No celular, uma barra
+fixa com preço e "Reservar" acompanha a rolagem. Campos vazios não aparecem.
+
+A trilha e o "Ver todas" apontam para a página que contém `[experiencias]`
+(detectada sozinha; filtro `conecta_exp_url_listagem` para forçar outra).
+
+`[experiencia_detalhe]` renderiza a mesma tela em outro lugar — atributos
+`id`, `whatsapp` e `relacionadas` (quantidade; `0` esconde).
+
+### Galeria de fotos e vídeos
+
+Na edição da experiência, a caixa **Galeria de fotos e vídeos** (lateral)
+monta o carrossel que aparece acima de "Sobre la experiencia":
+
+- **Adicionar fotos ou vídeos** abre a biblioteca de mídia (imagens e vídeos).
+- **Adicionar link do YouTube/Vimeo** aceita `youtube.com/watch`, `youtu.be`,
+  Shorts, `vimeo.com/{id}` e Vimeo não listado (`vimeo.com/{id}/{hash}`).
+- Arraste para ordenar; o "×" remove.
+
+A foto da experiência é sempre o primeiro item; o carrossel aparece a partir
+de dois itens. Fotos abrem ampliadas (só as fotos entram na navegação
+ampliada). Vídeo enviado ao site toca no slide com os controles nativos —
+prefira clipes curtos (até ~30 s / 15 MB). YouTube/Vimeo mostram só a capa e
+carregam o player no clique (YouTube no modo `youtube-nocookie`). Ao trocar de
+slide, o vídeo em reprodução para.
+
+O meta `galeria` guarda a lista em ordem: IDs de anexo e URLs de vídeo. A
+leitura pronta para exibir é `conecta_exp_galeria_itens( $post_id )`.
+
+### Destaques
+
+O interruptor **Destaque** (grupo "Detalhes da Experiência") marca a
+experiência para o filtro "Destacados" da listagem e para o
+`[experiencias_destaque]`.
+
+## Blocos para a home
+
+### `[experiencias_categorias]`
+
+Cartões das categorias com experiência publicada (nome, quantidade e seta, na
+cor da categoria), cada um levando a `/{listagem}/?categoria={slug}#experiencias`.
+
+| Atributo | Default | Uso |
+|---|---|---|
+| `categorias` | todas, em ordem alfabética | Slugs separados por vírgula, na ordem desejada. |
+| `limite` | `4` | Máximo de cartões. |
+| `alinhamento` | `centro` | `esquerda` alinha à esquerda. |
+| `titulo` | "Explora por categoría" | Título acima; `titulo=""` esconde. |
+
+### `[experiencias_destaque]`
+
+Cards das experiências marcadas como destaque, com o botão "Ver todas las
+experiencias". Até 1024px os cards viram uma faixa com rolagem horizontal.
+Sem nenhum destaque, não imprime nada.
+
+| Atributo | Default | Uso |
+|---|---|---|
+| `limite` | `-1` (todas) | Quantos cards. |
+| `colunas` | um por card, até 4 | Colunas no desktop. |
+| `titulo` | "Experiencias destacadas" | Título acima; `titulo=""` esconde. |
+
+### Personalização
+
+- WhatsApp: filtro `conecta_exp_whatsapp_numero` (default `5521990853118`) e
+  `conecta_exp_whatsapp_mensagem` (texto da mensagem).
+- Consulta da listagem: filtro `conecta_exp_listagem_query_args`.
+- Desligar o template automático do single: `add_filter( 'conecta_exp_usar_template_single', '__return_false' );`
+- HTML: copie um arquivo de `templates/` para `{tema}/rio-aventura/` e edite.
+- Os textos do front (botões, rótulos, títulos de seção) estão em espanhol,
+  o idioma padrão do site, e as traduções vêm com o plugin em `languages/`
+  (`pt_BR` e `en_US`). O TranslatePress troca o idioma e o WordPress usa
+  esses arquivos — não é preciso traduzi-los no editor do TranslatePress
+  (uma tradução feita lá tem prioridade). Conteúdo da experiência e nomes de
+  categoria continuam sendo traduzidos pelo dicionário do TranslatePress.
+- Ao mudar um texto do front: `wp i18n make-pot . languages/conecta-experiencias.pot --exclude=languages`,
+  edite os `.po` e rode `wp i18n make-mo languages && wp i18n make-php languages`.
+
+## Integrações
+
+- **TranslatePress:** o espanhol do site está cadastrado como `es_AR`; trocar o
+  idioma apagaria a ligação com as traduções, então só a bandeira é trocada
+  para a da Espanha (`trp_flag_html` / `trp_flag_file_name`). Outros pares em
+  `conecta_exp_bandeiras_trocadas`.
+- **Jetpack:** os "Posts relacionados" são desligados na página da experiência
+  (`jetpack_relatedposts_filter_enabled_for_request`), que já tem o bloco
+  próprio de relacionadas.
+
 ## Notas técnicas
 
 - Prefixo de código `conecta_` / text domain `conecta-experiencias`.
@@ -200,6 +341,19 @@ de resolução (`conecta_exp_cor_categoria_valor()`).
 - `flush_rewrite_rules()` rodado na ativação e na desativação.
 - Caso edite slugs de rewrite, revisite **Configurações → Links Permanentes**
   e salve para forçar um novo flush.
+
+## Histórico
+
+| Versão | Mudança |
+|---|---|
+| 1.13.0 | Galeria aceita vídeo da biblioteca e links do YouTube/Vimeo. |
+| 1.12.x | Cartões de categoria na home; cor de fundo dos cards; título dos destaques maior; relacionados do Jetpack desligados nas experiências. |
+| 1.11.x | `[experiencias_destaque]`; faixa com rolagem horizontal no celular; âncora `#experiencias`. |
+| 1.10.x | `[experiencias_categorias]`. |
+| 1.9.0 | Campo Destaque, filtro "Destacados" e coluna ★ no admin. |
+| 1.8.x | Galeria de fotos na página da experiência; bandeira da Espanha no TranslatePress. |
+| 1.7.x | `[experiencias]`, página da experiência, traduções pt/en, placeholder sem foto. |
+| 1.6.0 | Coluna "Foto" no admin. |
 
 ## Evolução
 

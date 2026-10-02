@@ -1,0 +1,1279 @@
+/*
+ * Rio Aventura — Experiências: listagem [experiencias] e página da
+ * experiência [experiencia_detalhe].
+ *
+ * Tudo escopado em .cxp. As cores seguem o Kit do Elementor (variáveis
+ * --e-global-color-*) com fallback para a paleta do site. --cxp-cor e
+ * --cxp-cor-texto vêm da categoria (campo ACF "cor" do termo), com a cor de
+ * texto escolhida no PHP pelo contraste.
+ */
+
+.cxp {
+	--cxp-creme: #fcf3d4;
+	--cxp-papel: #fef8e6;
+	--cxp-tinta: #132110;
+	--cxp-verde: var(--e-global-color-text, #005f4e);
+	--cxp-verde-claro: #e3efe4;
+	--cxp-borda: #e6dcbc;
+	--cxp-suave: #4a5a48;
+	--cxp-whatsapp: #0a7a43;
+	--cxp-whatsapp-hover: #08653a;
+	--cxp-raio: 16px;
+	--cxp-sombra: 0 1px 2px rgba(19, 33, 16, .06), 0 8px 24px rgba(19, 33, 16, .08);
+	--cxp-fonte: var(--e-global-typography-primary-font-family, "Outfit"), system-ui, sans-serif;
+	--cxp-fonte-preco: "Oferta do dia", var(--cxp-fonte);
+	--cxp-cor: #008b72;
+	--cxp-cor-texto: #fff;
+
+	font-family: var(--cxp-fonte);
+	color: var(--cxp-tinta);
+	line-height: 1.5;
+	box-sizing: border-box;
+}
+
+.cxp *,
+.cxp *::before,
+.cxp *::after {
+	box-sizing: inherit;
+}
+
+.cxp svg {
+	width: 1.1em;
+	height: 1.1em;
+	flex: none;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.cxp a:focus-visible {
+	outline: 3px solid var(--cxp-tinta);
+	outline-offset: 3px;
+	box-shadow: 0 0 0 6px #fff;
+	border-radius: 6px;
+}
+
+.cxp .screen-reader-text {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+}
+
+/* ---------- Botões ---------- */
+
+.cxp .cxp-botao {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: .5em;
+	min-height: 48px;
+	padding: .75em 1.4em;
+	border: 2px solid transparent;
+	border-radius: 999px;
+	font: 600 1rem/1.2 var(--cxp-fonte);
+	text-decoration: none;
+	text-align: center;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: background-color .15s, color .15s, border-color .15s;
+}
+
+.cxp .cxp-botao--whatsapp {
+	background: var(--cxp-whatsapp);
+	color: #fff;
+}
+
+.cxp .cxp-botao--whatsapp:hover {
+	background: var(--cxp-whatsapp-hover);
+	color: #fff;
+}
+
+.cxp .cxp-botao--whatsapp .cxp-preenchido {
+	fill: currentColor;
+	stroke: none;
+}
+
+.cxp .cxp-botao--secundario {
+	border-color: var(--cxp-verde);
+	color: var(--cxp-verde);
+	background: transparent;
+}
+
+.cxp .cxp-botao--secundario:hover {
+	background: var(--cxp-verde);
+	color: #fff;
+}
+
+.cxp .cxp-botao--card {
+	min-height: 44px;
+	padding: .6em 1.1em;
+	background: var(--cxp-verde);
+	color: #fff;
+	font-size: .9375rem;
+}
+
+/* ---------- Selo de categoria ---------- */
+
+.cxp .cxp-badge {
+	display: inline-block;
+	padding: .3em .8em;
+	border-radius: 999px;
+	background: var(--cxp-cor);
+	color: var(--cxp-cor-texto);
+	font-size: .8125rem;
+	font-weight: 600;
+	letter-spacing: .01em;
+	line-height: 1.3;
+}
+
+/* ---------- Botões de categoria [experiencias_categorias] ---------- */
+
+/* Centralizado por padrão; alinhamento="esquerda" no shortcode alinha à esquerda. */
+.cxp.cxp-categorias {
+	width: 100%;
+	padding: 56px 0;
+}
+
+.cxp .cxp-categorias__titulo {
+	margin: 0 0 24px;
+	font-family: var(--cxp-fonte);
+	font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+	font-weight: 700;
+	line-height: 1.2;
+	color: var(--cxp-verde);
+}
+
+/* Cartões de largura parecida, quebrando antes de espremer; a última linha
+   incompleta fica centralizada (flex, não grid). */
+.cxp .cxp-categorias__lista {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	gap: 16px;
+}
+
+.cxp .cxp-categorias__lista > .cxp-categorias__item {
+	flex: 0 1 320px;
+	min-width: 260px;
+}
+
+.cxp.cxp-categorias--centro {
+	text-align: center;
+}
+
+.cxp.cxp-categorias--centro .cxp-categorias__lista {
+	justify-content: center;
+}
+
+.cxp .cxp-categorias__item {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	min-height: 76px;
+	padding: 14px 18px 14px 20px;
+	border: 0;
+	border-radius: 12px;
+	background: var(--cxp-cor);
+	color: var(--cxp-cor-texto);
+	text-align: left;
+	text-decoration: none;
+	box-shadow: var(--cxp-sombra);
+	transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+
+.cxp .cxp-categorias__item:hover {
+	color: var(--cxp-cor-texto);
+	transform: translateY(-2px);
+	box-shadow: 0 2px 4px rgba(19, 33, 16, .08), 0 12px 28px rgba(19, 33, 16, .14);
+}
+
+.cxp .cxp-categorias__texto {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+}
+
+.cxp .cxp-categorias__nome {
+	font: 600 1.0625rem/1.25 var(--cxp-fonte);
+}
+
+.cxp .cxp-categorias__qtd {
+	font-size: .875rem;
+	font-weight: 500;
+}
+
+.cxp .cxp-categorias__seta {
+	flex: none;
+	width: 22px;
+	height: 22px;
+	color: currentColor;
+	transition: transform .2s;
+}
+
+.cxp .cxp-categorias__item:hover .cxp-categorias__seta {
+	transform: translateX(3px);
+}
+
+@media (max-width: 640px) {
+	.cxp.cxp-categorias {
+		padding: 40px 0;
+	}
+
+	.cxp .cxp-categorias__lista {
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.cxp .cxp-categorias__lista > .cxp-categorias__item {
+		flex-basis: auto;
+		min-width: 0;
+	}
+
+	.cxp .cxp-categorias__item {
+		min-height: 68px;
+	}
+}
+
+/* ---------- Experiências em destaque [experiencias_destaque] ---------- */
+
+.cxp.cxp-destaques {
+	width: 100%;
+	padding: 0 0 64px;
+}
+
+.cxp .cxp-destaques__titulo {
+	margin: 0 0 28px;
+	font-family: var(--cxp-fonte);
+	font-size: clamp(1.625rem, 3vw, 2.125rem);
+	font-weight: 700;
+	line-height: 1.2;
+	text-align: center;
+	color: var(--cxp-verde);
+}
+
+.cxp .cxp-destaques__todas {
+	margin: 32px 0 0;
+	text-align: center;
+}
+
+/* Tablet e celular: faixa com rolagem horizontal; o próximo card aparece
+   cortado na borda, indicando que dá para arrastar. */
+@media (max-width: 1024px) {
+	.cxp .cxp-grade.cxp-destaques__trilho {
+		display: flex;
+		gap: 16px;
+		margin: 0 -16px;
+		padding: 4px 16px 20px;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scroll-padding-inline: 16px;
+		overscroll-behavior-x: contain;
+		scrollbar-width: none;
+	}
+
+	.cxp .cxp-destaques__trilho::-webkit-scrollbar {
+		display: none;
+	}
+
+	.cxp .cxp-destaques__trilho > .cxp-card {
+		flex: 0 0 min(42%, 340px);
+		scroll-snap-align: start;
+	}
+
+	.cxp .cxp-destaques__trilho > .cxp-card:hover {
+		transform: none;
+	}
+
+	.cxp .cxp-destaques__todas {
+		margin-top: 12px;
+	}
+}
+
+@media (max-width: 640px) {
+	.cxp .cxp-destaques__trilho > .cxp-card {
+		flex-basis: 85%;
+	}
+
+	.cxp .cxp-destaques__trilho .cxp-preco {
+		white-space: nowrap;
+	}
+}
+
+/* ---------- Preço ---------- */
+
+.cxp .cxp-preco {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	line-height: 1.1;
+}
+
+.cxp .cxp-preco__valor {
+	font-family: var(--cxp-fonte-preco);
+	font-size: 1.5rem;
+	color: var(--cxp-verde);
+}
+
+.cxp .cxp-preco--grande .cxp-preco__valor {
+	font-size: 2.25rem;
+}
+
+/* ---------- Listagem ---------- */
+
+.cxp-listagem {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 16px;
+}
+
+/* Folga ao chegar pela âncora #experiencias (botões de categoria da home). */
+.cxp.cxp-listagem {
+	scroll-margin-top: 24px;
+}
+
+.cxp .cxp-filtro {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: .5rem;
+	order: -2;
+}
+
+.cxp .cxp-filtro__item {
+	flex: none;
+	display: inline-flex;
+	align-items: center;
+	gap: .5em;
+	min-height: 44px;
+	padding: .5em 1.1em;
+	border: 2px solid var(--cxp-borda);
+	border-radius: 999px;
+	background: var(--cxp-papel);
+	color: var(--cxp-tinta);
+	font-weight: 500;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: border-color .15s, background-color .15s, color .15s;
+}
+
+/* No celular o filtro vira uma faixa com rolagem lateral, em vez de 5 linhas. */
+@media (max-width: 640px) {
+	.cxp .cxp-filtro {
+		flex-wrap: nowrap;
+		justify-content: flex-start;
+		margin: 0 -16px;
+		padding: 4px 16px 8px;
+		overflow-x: auto;
+		scrollbar-width: none;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.cxp .cxp-filtro::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+.cxp .cxp-filtro__item:hover {
+	border-color: var(--cxp-verde);
+	color: var(--cxp-tinta);
+}
+
+.cxp .cxp-filtro__item[aria-current="true"] {
+	border-color: var(--cxp-verde);
+	background: var(--cxp-verde);
+	color: #fff;
+}
+
+.cxp .cxp-filtro__cor {
+	width: .75em;
+	height: .75em;
+	border-radius: 50%;
+	background: var(--cxp-cor);
+	box-shadow: 0 0 0 2px #fff;
+}
+
+.cxp .cxp-filtro__estrela {
+	fill: var(--e-global-color-primary, #f9a825);
+	stroke: var(--e-global-color-primary, #f9a825);
+	stroke-width: 1.5;
+}
+
+.cxp .cxp-filtro__qtd {
+	min-width: 1.6em;
+	padding: 0 .4em;
+	border-radius: 999px;
+	background: rgba(19, 33, 16, .08);
+	font-size: .8125rem;
+	text-align: center;
+}
+
+.cxp .cxp-filtro__item[aria-current="true"] .cxp-filtro__qtd {
+	background: rgba(255, 255, 255, .22);
+}
+
+.cxp .cxp-listagem__status {
+	order: -1;
+	margin: 0;
+	text-align: center;
+	font-size: .875rem;
+	color: var(--cxp-suave);
+}
+
+.cxp .cxp-vazio {
+	text-align: center;
+	color: var(--cxp-suave);
+}
+
+/* ---------- Grade e card ---------- */
+
+.cxp .cxp-grade {
+	display: grid;
+	grid-template-columns: repeat(var(--cxp-colunas, 3), minmax(0, 1fr));
+	gap: 24px;
+}
+
+@media (max-width: 1024px) {
+	.cxp .cxp-grade {
+		grid-template-columns: repeat(min(var(--cxp-colunas, 3), 2), minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 640px) {
+	.cxp .cxp-grade {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.cxp .cxp-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	border-radius: var(--cxp-raio);
+	background: var(--cxp-papel);
+	box-shadow: var(--cxp-sombra);
+	border-top: 4px solid var(--cxp-cor);
+	transition: transform .2s, box-shadow .2s;
+}
+
+.cxp .cxp-card[hidden] {
+	display: none;
+}
+
+.cxp .cxp-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 2px 4px rgba(19, 33, 16, .08), 0 14px 32px rgba(19, 33, 16, .14);
+}
+
+/* Contorno só na navegação por teclado (:focus-visible). Com :focus-within
+   ele aparecia também depois do clique, ao voltar para a página. */
+.cxp .cxp-card:has(.cxp-card__link:focus-visible) {
+	outline: 3px solid var(--cxp-tinta);
+	outline-offset: 3px;
+}
+
+.cxp .cxp-card__media {
+	position: relative;
+	aspect-ratio: 4 / 3;
+	overflow: hidden;
+	background: var(--cxp-borda);
+}
+
+/* Absoluta para que fotos em retrato não estiquem o card. */
+.cxp .cxp-card .cxp-card__img {
+	position: absolute;
+	inset: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+	max-width: none;
+	object-fit: cover;
+}
+
+.cxp .cxp-card__img--vazia {
+	background: color-mix(in srgb, var(--cxp-cor) 16%, var(--cxp-creme));
+}
+
+/* Placeholder sem foto: símbolo da marca (assets/simbolo.svg) como máscara,
+   para herdar a cor da categoria. */
+.cxp .cxp-card__img--vazia::after,
+.cxp .cxp-hero--sem-foto::after {
+	content: "";
+	position: absolute;
+	background: var(--cxp-cor);
+	-webkit-mask: url("simbolo.svg") center / contain no-repeat;
+	mask: url("simbolo.svg") center / contain no-repeat;
+}
+
+.cxp .cxp-card__img--vazia::after {
+	inset: 22% 30%;
+	opacity: .55;
+}
+
+.cxp .cxp-card__media .cxp-badge {
+	position: absolute;
+	z-index: 1;
+	top: 12px;
+	left: 12px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+}
+
+.cxp .cxp-card__corpo {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: .75rem;
+	padding: 20px;
+}
+
+.cxp .cxp-card__titulo {
+	margin: 0;
+	font-family: var(--cxp-fonte);
+	font-size: 1.25rem;
+	font-weight: 600;
+	line-height: 1.25;
+	color: var(--cxp-tinta);
+}
+
+.cxp .cxp-card__link {
+	color: inherit;
+	text-decoration: none;
+}
+
+/* O card inteiro é clicável pelo link do título. */
+.cxp .cxp-card__link::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+.cxp .cxp-card__link:focus-visible {
+	outline: none;
+	box-shadow: none;
+}
+
+.cxp .cxp-card__resumo {
+	display: -webkit-box;
+	margin: 0;
+	overflow: hidden;
+	font-size: .9375rem;
+	color: var(--cxp-suave);
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}
+
+.cxp .cxp-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: .4rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cxp .cxp-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: .35em;
+	padding: .25em .7em;
+	border-radius: 999px;
+	background: var(--cxp-verde-claro);
+	color: var(--cxp-verde);
+	font-size: .8125rem;
+	font-weight: 500;
+}
+
+.cxp .cxp-card__rodape {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-top: auto;
+	padding-top: .75rem;
+	border-top: 1px solid var(--cxp-borda);
+}
+
+/* ---------- Página da experiência ---------- */
+
+/* O footer tem o topo transparente (silhueta): o fundo do body aparece atrás
+   dele. Mesma cor global que as páginas do Elementor usam. */
+body.single-experiencia,
+.cxp-main {
+	background-color: var(--e-global-color-4c064d8, #fcf3d4);
+}
+
+.cxp-detalhe {
+	background: var(--cxp-creme);
+	padding-bottom: 64px;
+}
+
+.cxp .cxp-hero {
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+	min-height: min(70vh, 620px);
+	padding: 140px 16px 48px;
+	background: var(--cxp-verde) var(--cxp-hero-img) center / cover no-repeat;
+	color: #fff;
+}
+
+.cxp .cxp-hero::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(to bottom, rgba(19, 33, 16, .65) 0, rgba(19, 33, 16, 0) 180px),
+		linear-gradient(to top, rgba(19, 33, 16, .88) 0, rgba(19, 33, 16, .35) 55%, rgba(19, 33, 16, .15) 100%);
+}
+
+.cxp .cxp-hero--sem-foto {
+	min-height: 420px;
+	overflow: hidden;
+	background: var(--cxp-verde);
+}
+
+.cxp .cxp-hero--sem-foto::after {
+	top: 90px;
+	right: max(16px, calc(50% - 600px));
+	bottom: 24px;
+	width: min(40%, 360px);
+	background: var(--cxp-creme);
+	opacity: .18;
+	-webkit-mask-position: right center;
+	mask-position: right center;
+}
+
+.cxp .cxp-hero__conteudo {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.cxp .cxp-trilha {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: .5em;
+	margin-bottom: 1rem;
+	font-size: .9375rem;
+}
+
+.cxp .cxp-trilha a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	color: #fff;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.cxp .cxp-trilha a:hover {
+	color: var(--e-global-color-primary, #f9a825);
+}
+
+.cxp .cxp-hero__titulo {
+	max-width: 20ch;
+	margin: .5rem 0 0;
+	font-family: var(--cxp-fonte);
+	font-size: clamp(2rem, 5vw, 3.5rem);
+	font-weight: 700;
+	line-height: 1.1;
+	color: #fff;
+	text-shadow: 0 2px 12px rgba(0, 0, 0, .35);
+}
+
+.cxp .cxp-hero__resumo {
+	max-width: 60ch;
+	margin: 1rem 0 0;
+	font-size: 1.125rem;
+	color: #fff;
+}
+
+.cxp .cxp-detalhe__layout {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 360px;
+	align-items: start;
+	gap: 48px;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 48px 16px 0;
+}
+
+.cxp .cxp-detalhe__principal {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	min-width: 0;
+}
+
+.cxp .cxp-secao__titulo {
+	margin: 0 0 1rem;
+	font-family: var(--cxp-fonte);
+	font-size: 1.5rem;
+	font-weight: 700;
+	line-height: 1.25;
+	color: var(--cxp-verde);
+}
+
+.cxp .cxp-texto {
+	max-width: 68ch;
+	font-size: 1.0625rem;
+	color: var(--cxp-tinta);
+}
+
+.cxp .cxp-texto p {
+	margin: 0 0 1em;
+}
+
+.cxp .cxp-texto p:last-child {
+	margin-bottom: 0;
+}
+
+.cxp .cxp-texto strong {
+	color: var(--cxp-verde);
+}
+
+.cxp .cxp-incluso {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 24px;
+}
+
+.cxp .cxp-incluso__col,
+.cxp .cxp-levar {
+	padding: 24px;
+	border-radius: var(--cxp-raio);
+	background: var(--cxp-papel);
+	box-shadow: var(--cxp-sombra);
+}
+
+.cxp .cxp-incluso__col .cxp-secao__titulo {
+	font-size: 1.25rem;
+}
+
+.cxp .cxp-lista {
+	display: flex;
+	flex-direction: column;
+	gap: .6rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cxp .cxp-lista li {
+	display: flex;
+	gap: .6em;
+	align-items: flex-start;
+}
+
+.cxp .cxp-lista svg {
+	margin-top: .15em;
+	padding: 2px;
+	border-radius: 50%;
+	width: 1.3em;
+	height: 1.3em;
+	stroke-width: 3;
+}
+
+.cxp .cxp-lista--sim svg {
+	background: var(--cxp-verde-claro);
+	color: var(--cxp-verde);
+}
+
+.cxp .cxp-lista--nao svg {
+	background: #f7e2da;
+	color: #a3361a;
+}
+
+.cxp .cxp-reserva {
+	position: sticky;
+	top: 24px;
+}
+
+.cxp .cxp-reserva__caixa {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding: 28px;
+	border-radius: var(--cxp-raio);
+	background: var(--cxp-papel);
+	box-shadow: var(--cxp-sombra);
+	border-top: 6px solid var(--cxp-cor);
+}
+
+.cxp .cxp-ficha {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+}
+
+.cxp .cxp-ficha__item {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: .7rem 0;
+	border-bottom: 1px solid var(--cxp-borda);
+}
+
+.cxp .cxp-ficha__item:first-child {
+	border-top: 1px solid var(--cxp-borda);
+}
+
+.cxp .cxp-ficha dt {
+	color: var(--cxp-suave);
+}
+
+.cxp .cxp-ficha dd {
+	margin: 0;
+	font-weight: 600;
+	text-align: right;
+}
+
+.cxp .cxp-reserva .cxp-botao--whatsapp {
+	width: 100%;
+	font-size: 1.0625rem;
+}
+
+.cxp .cxp-reserva__nota {
+	margin: 0;
+	font-size: .875rem;
+	color: var(--cxp-suave);
+	text-align: center;
+}
+
+.cxp .cxp-relacionadas {
+	max-width: 1200px;
+	margin: 72px auto 0;
+	padding: 0 16px;
+}
+
+.cxp .cxp-relacionadas__titulo {
+	margin: 0 0 24px;
+	font-family: var(--cxp-fonte);
+	font-size: 1.75rem;
+	font-weight: 700;
+	color: var(--cxp-verde);
+}
+
+.cxp .cxp-relacionadas__todas {
+	margin: 32px 0 0;
+	text-align: center;
+}
+
+/* ---------- Galeria (carrossel da página da experiência) ---------- */
+
+.cxp .cxp-galeria__palco {
+	position: relative;
+	border-radius: var(--cxp-raio);
+	overflow: hidden;
+	background: var(--cxp-tinta);
+	box-shadow: var(--cxp-sombra);
+}
+
+.cxp .cxp-galeria__trilho {
+	display: flex;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+	overscroll-behavior-x: contain;
+}
+
+.cxp .cxp-galeria__trilho::-webkit-scrollbar {
+	display: none;
+}
+
+.cxp .cxp-galeria__slide {
+	flex: 0 0 100%;
+	margin: 0;
+	scroll-snap-align: start;
+	scroll-snap-stop: always;
+}
+
+.cxp .cxp-galeria__ampliar {
+	display: block;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	cursor: zoom-in;
+}
+
+.cxp .cxp-galeria__ampliar img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 3 / 2;
+	object-fit: cover;
+}
+
+/* Vídeos: MP4 com controles nativos; YouTube/Vimeo mostram a capa até o clique. */
+.cxp .cxp-galeria__video,
+.cxp .cxp-galeria__iframe,
+.cxp .cxp-galeria__externo {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 3 / 2;
+	margin: 0;
+	border: 0;
+	background: #000;
+}
+
+.cxp .cxp-galeria__video {
+	object-fit: contain;
+}
+
+.cxp .cxp-galeria__externo {
+	position: relative;
+	padding: 0;
+	cursor: pointer;
+}
+
+.cxp .cxp-galeria__externo img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* Capa de reserva do YouTube (4:3 com tarjas pretas): amplia para cortar as tarjas. */
+.cxp .cxp-galeria__externo img.cxp-galeria__capa-4x3 {
+	transform: scale(1.34);
+}
+
+.cxp svg.cxp-galeria__play {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 76px;
+	height: 76px;
+	transform: translate(-50%, -50%);
+	stroke: #fff;
+	stroke-width: 1;
+	filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .35));
+	transition: transform .2s;
+}
+
+.cxp svg.cxp-galeria__play circle {
+	fill: rgba(19, 33, 16, .6);
+}
+
+.cxp svg.cxp-galeria__play path {
+	fill: #fff;
+	stroke: none;
+}
+
+.cxp .cxp-galeria__externo:hover svg.cxp-galeria__play {
+	transform: translate(-50%, -50%) scale(1.08);
+}
+
+/* No slide de vídeo o contador desce menos para não cobrir os controles do player. */
+.cxp .cxp-galeria__palco:has(.cxp-galeria__slide--video) .cxp-galeria__contador {
+	bottom: auto;
+	top: 12px;
+}
+
+.cxp .cxp-galeria__seta {
+	position: absolute;
+	top: 50%;
+	display: grid;
+	place-items: center;
+	width: 48px;
+	height: 48px;
+	margin-top: -24px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(255, 251, 239, .92);
+	color: var(--cxp-tinta);
+	box-shadow: 0 2px 8px rgba(19, 33, 16, .25);
+	cursor: pointer;
+	transition: background-color .2s;
+}
+
+/* O tema pinta todo <button> de rosa no hover/foco; aqui os estados são fixos. */
+.cxp .cxp-galeria .cxp-galeria__seta:hover,
+.cxp .cxp-galeria .cxp-galeria__seta:focus,
+.cxp .cxp-galeria .cxp-lightbox__fechar:hover,
+.cxp .cxp-galeria .cxp-lightbox__fechar:focus {
+	background: #fff;
+	color: var(--cxp-tinta);
+}
+
+.cxp .cxp-galeria .cxp-galeria__ampliar:hover,
+.cxp .cxp-galeria .cxp-galeria__ampliar:focus,
+.cxp .cxp-galeria .cxp-galeria__externo:hover,
+.cxp .cxp-galeria .cxp-galeria__externo:focus,
+.cxp .cxp-galeria .cxp-galeria__miniatura:hover,
+.cxp .cxp-galeria .cxp-galeria__miniatura:focus {
+	background: none;
+}
+
+.cxp .cxp-galeria__seta svg {
+	width: 24px;
+	height: 24px;
+	stroke-width: 2.5;
+}
+
+.cxp .cxp-galeria__seta--anterior {
+	left: 12px;
+}
+
+.cxp .cxp-galeria__seta--proxima {
+	right: 12px;
+}
+
+.cxp .cxp-galeria__contador {
+	position: absolute;
+	right: 12px;
+	bottom: 12px;
+	margin: 0;
+	padding: .25em .7em;
+	border-radius: 999px;
+	background: rgba(19, 33, 16, .75);
+	color: #fff;
+	font-size: .875rem;
+	font-variant-numeric: tabular-nums;
+	pointer-events: none;
+}
+
+.cxp .cxp-galeria__miniaturas {
+	display: flex;
+	gap: 8px;
+	margin-top: 12px;
+	padding: 4px;
+	overflow-x: auto;
+	scrollbar-width: thin;
+}
+
+.cxp .cxp-galeria__miniatura {
+	flex: 0 0 auto;
+	width: 80px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 10px;
+	overflow: hidden;
+	background: none;
+	opacity: .6;
+	cursor: pointer;
+	transition: opacity .2s;
+}
+
+.cxp .cxp-galeria__miniatura:hover,
+.cxp .cxp-galeria__miniatura[aria-current="true"] {
+	opacity: 1;
+}
+
+.cxp .cxp-galeria__miniatura[aria-current="true"] {
+	box-shadow: 0 0 0 3px var(--cxp-verde);
+}
+
+.cxp .cxp-galeria__miniatura {
+	position: relative;
+}
+
+.cxp .cxp-galeria__miniatura svg.cxp-galeria__play {
+	width: 30px;
+	height: 30px;
+}
+
+.cxp .cxp-galeria__miniatura-vazia {
+	display: block;
+	aspect-ratio: 1;
+	background: var(--cxp-tinta);
+}
+
+.cxp .cxp-galeria__miniatura img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 1;
+	object-fit: cover;
+}
+
+.cxp .cxp-galeria button:focus-visible {
+	outline: 3px solid var(--cxp-tinta);
+	outline-offset: 3px;
+	box-shadow: 0 0 0 6px #fff;
+}
+
+.cxp .cxp-galeria__ampliar:focus-visible {
+	outline-offset: -6px;
+	box-shadow: inset 0 0 0 9px #fff;
+}
+
+/* Ampliação: <dialog> em tela cheia, foto inteira sem corte. */
+.cxp .cxp-lightbox {
+	width: 100vw;
+	max-width: none;
+	height: 100vh;
+	height: 100dvh;
+	max-height: none;
+	margin: 0;
+	padding: 56px 72px;
+	border: 0;
+	background: rgba(10, 18, 9, .97);
+}
+
+.cxp .cxp-lightbox[open] {
+	display: grid;
+	place-items: center;
+}
+
+.cxp .cxp-lightbox::backdrop {
+	background: rgba(10, 18, 9, .6);
+}
+
+.cxp .cxp-lightbox__img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: calc(100dvh - 112px);
+	object-fit: contain;
+	border-radius: 8px;
+}
+
+.cxp .cxp-lightbox__fechar {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	display: grid;
+	place-items: center;
+	width: 48px;
+	height: 48px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(255, 251, 239, .92);
+	color: var(--cxp-tinta);
+	cursor: pointer;
+}
+
+.cxp .cxp-lightbox__fechar svg {
+	width: 24px;
+	height: 24px;
+	stroke-width: 2.5;
+}
+
+.cxp .cxp-lightbox--uma .cxp-galeria__seta,
+.cxp .cxp-lightbox--uma .cxp-galeria__contador {
+	display: none;
+}
+
+.cxp .cxp-lightbox .cxp-galeria__contador {
+	right: 50%;
+	bottom: 16px;
+	transform: translateX(50%);
+}
+
+@media (max-width: 640px) {
+	.cxp .cxp-galeria__seta {
+		width: 44px;
+		height: 44px;
+		margin-top: -22px;
+	}
+
+	.cxp .cxp-galeria__miniatura {
+		width: 64px;
+	}
+
+	.cxp .cxp-lightbox {
+		padding: 72px 8px;
+	}
+
+	.cxp .cxp-lightbox__img {
+		max-height: calc(100dvh - 144px);
+	}
+
+	.cxp .cxp-lightbox .cxp-galeria__seta {
+		top: auto;
+		bottom: 8px;
+		margin-top: 0;
+	}
+}
+
+/* Barra fixa de reserva: só no celular, quando a caixa lateral sai da tela. */
+.cxp .cxp-barra-reserva {
+	display: none;
+}
+
+@media (max-width: 900px) {
+	.cxp .cxp-detalhe__layout {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 40px;
+		padding-top: 32px;
+	}
+
+	.cxp .cxp-reserva {
+		position: static;
+		order: -1;
+	}
+
+	.cxp .cxp-hero {
+		min-height: 420px;
+		padding-bottom: 32px;
+	}
+
+	.cxp-detalhe {
+		padding-bottom: 104px;
+	}
+
+	.cxp .cxp-barra-reserva {
+		position: fixed;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 50;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+		background: var(--cxp-papel);
+		box-shadow: 0 -4px 16px rgba(19, 33, 16, .12);
+	}
+
+	.cxp .cxp-barra-reserva .cxp-botao {
+		flex: 1;
+		max-width: 220px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cxp .cxp-card,
+	.cxp .cxp-botao,
+	.cxp .cxp-filtro__item,
+	.cxp .cxp-galeria__seta,
+	.cxp .cxp-galeria__miniatura,
+	.cxp .cxp-categorias__item,
+	.cxp .cxp-categorias__seta {
+		transition: none;
+	}
+
+	.cxp .cxp-categorias__item:hover,
+	.cxp .cxp-categorias__item:hover .cxp-categorias__seta {
+		transform: none;
+	}
+
+	.cxp .cxp-card:hover {
+		transform: none;
+	}
+}

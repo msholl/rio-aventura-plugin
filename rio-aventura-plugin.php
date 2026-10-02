@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       Rio Aventura — Experiências
  * Plugin URI:        https://conecta-soft.com.br/
- * Description:       Estrutura de dados das experiências de turismo: CPT "Experiência", taxonomia "Categorias" (com cor por termo) e campos ACF (preço, duração, dificuldade, distância, horários, incluso, não incluso, levar contigo). Independente de tema, pronto para os Dynamic Tags do Elementor.
- * Version:           1.6.0
+ * Description:       Estrutura de dados das experiências de turismo: CPT "Experiência", taxonomia "Categorias" (com cor por termo) e campos ACF (preço, duração, dificuldade, distância, horários, incluso, não incluso, levar contigo). Independente de tema, pronto para os Dynamic Tags do Elementor. Inclui a listagem [experiencias] com filtro por categoria e a página completa da experiência.
+ * Version:           1.13.0
  * Requires at least: 6.0
  * Requires PHP:      8.1
  * Author:            Matheus Sholl Schneider
@@ -19,7 +19,7 @@
 // Impede o acesso direto ao arquivo.
 defined( 'ABSPATH' ) || exit;
 
-define( 'CONECTA_EXP_VERSION', '1.6.0' );
+define( 'CONECTA_EXP_VERSION', '1.13.0' );
 define( 'CONECTA_EXP_FILE', __FILE__ );
 define( 'CONECTA_EXP_PATH', plugin_dir_path( __FILE__ ) );
 
@@ -29,6 +29,9 @@ require_once CONECTA_EXP_PATH . 'includes/class-cpt.php';
 require_once CONECTA_EXP_PATH . 'includes/acf-fields.php';
 require_once CONECTA_EXP_PATH . 'includes/shortcode-cor-categoria.php';
 require_once CONECTA_EXP_PATH . 'includes/elementor-dynamic-tags.php';
+require_once CONECTA_EXP_PATH . 'includes/galeria.php';
+require_once CONECTA_EXP_PATH . 'includes/front.php';
+require_once CONECTA_EXP_PATH . 'includes/translatepress.php';
 
 // Só fazem sentido no admin — não têm nada a fazer no front.
 if ( is_admin() ) {

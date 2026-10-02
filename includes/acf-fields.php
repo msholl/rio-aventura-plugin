@@ -28,6 +28,14 @@ add_action(
 				'title'    => __( 'Detalhes da Experiência', 'conecta-experiencias' ),
 				'fields'   => array(
 					array(
+						'key'          => 'field_exp_destaque',
+						'label'        => __( 'Destaque', 'conecta-experiencias' ),
+						'name'         => 'destaque',
+						'type'         => 'true_false',
+						'ui'           => 1,
+						'instructions' => __( 'Aparece no filtro "Destacados", o primeiro da página de experiências.', 'conecta-experiencias' ),
+					),
+					array(
 						'key'         => 'field_exp_preco',
 						'label'       => __( 'Preço', 'conecta-experiencias' ),
 						'name'        => 'preco',

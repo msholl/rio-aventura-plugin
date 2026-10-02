@@ -1,0 +1,133 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Rio Aventura — Experiências\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: conecta-experiencias\n"
+
+msgid "Todas"
+msgstr "Todas"
+
+msgid "Filtrar por categoría"
+msgstr "Filtrar por categoria"
+
+msgid "No hay experiencias disponibles en este momento."
+msgstr "Não há experiências disponíveis no momento."
+
+msgid "Ver detalles"
+msgstr "Ver detalhes"
+
+msgid "Ver todas"
+msgstr "Ver todas"
+
+msgid "Experiencias"
+msgstr "Experiências"
+
+msgid "Ruta de navegación"
+msgstr "Caminho de navegação"
+
+msgid "Sobre la experiencia"
+msgstr "Sobre a experiência"
+
+msgid "Qué incluye"
+msgstr "O que inclui"
+
+msgid "Incluye"
+msgstr "Inclui"
+
+msgid "No incluye"
+msgstr "Não inclui"
+
+msgid "Qué llevar"
+msgstr "O que levar"
+
+msgid "Reserva"
+msgstr "Reserva"
+
+msgid "Duración"
+msgstr "Duração"
+
+msgid "Dificultad"
+msgstr "Dificuldade"
+
+msgid "Distancia"
+msgstr "Distância"
+
+msgid "Horarios"
+msgstr "Horários"
+
+msgid "Reservar por WhatsApp"
+msgstr "Reservar pelo WhatsApp"
+
+msgid "Reservar"
+msgstr "Reservar"
+
+msgid "(abre en una nueva pestaña)"
+msgstr "(abre em uma nova aba)"
+
+msgid "Respondemos por WhatsApp para confirmar fecha, horario y disponibilidad."
+msgstr "Respondemos pelo WhatsApp para confirmar data, horário e disponibilidade."
+
+msgid "Más experiencias en"
+msgstr "Mais experiências em"
+
+msgid "Más experiencias"
+msgstr "Mais experiências"
+
+msgid "¡Hola! Vi en el sitio la experiencia \"%s\" y quiero reservarla."
+msgstr "Olá! Vi no site a experiência \"%s\" e quero reservar."
+
+msgid "%d experiencia"
+msgid_plural "%d experiencias"
+msgstr[0] "%d experiência"
+msgstr[1] "%d experiências"
+
+msgid "carrusel"
+msgstr "carrossel"
+
+msgid "Fotos de la experiencia"
+msgstr "Fotos da experiência"
+
+msgid "foto"
+msgstr "foto"
+
+msgid "Ampliar foto"
+msgstr "Ampliar foto"
+
+msgid "Foto anterior"
+msgstr "Foto anterior"
+
+msgid "Foto siguiente"
+msgstr "Próxima foto"
+
+#. translators: %d: número da foto.
+msgid "Ver foto %d"
+msgstr "Ver foto %d"
+
+msgid "Cerrar"
+msgstr "Fechar"
+
+msgid "Destacados"
+msgstr "Destaques"
+
+msgid "Categorías de experiencias"
+msgstr "Categorias de experiências"
+
+msgid "Explora por categoría"
+msgstr "Explore por categoria"
+
+msgid "Experiencias destacadas"
+msgstr "Experiências em destaque"
+
+msgid "Ver todas las experiencias"
+msgstr "Ver todas as experiências"
+
+msgid "Reproducir video"
+msgstr "Reproduzir vídeo"
+
+#. translators: %d: número do item na galeria.
+msgid "Ver video %d"
+msgstr "Ver vídeo %d"
